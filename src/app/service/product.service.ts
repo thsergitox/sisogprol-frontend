@@ -2,6 +2,9 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Producto} from "../model/producto";
 import {HttpClient} from "@angular/common/http";
+import { getConexionBackend } from '../utils/constants'
+import { environment } from '../../environments/environment'
+
 
 // Datos de prueba
 const PRODUCT_DATA: Producto[] = [
@@ -17,8 +20,7 @@ const PRODUCT_DATA: Producto[] = [
 export class ProductService {
 
   constructor(private http: HttpClient) { }
-
-  private backendUrl:string = 'https://sigsoprol-backend-6c1c1113a8ca.herokuapp.com'
+  private backendUrl:string = environment.apiUrl
   private productoUrl = '/api/producto/all';
   private apiEndpointUrl:string  = this.backendUrl + this.productoUrl;
 

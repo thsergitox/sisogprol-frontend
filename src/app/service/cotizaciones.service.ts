@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Cotizaciones } from '../model/cotizaciones';
+import { getConexionBackend } from '../utils/constants'
+import { environment } from '../../environments/environment'
 
 // Datos de prueba
 const COTIZACIONES_DATA: Cotizaciones[] = [
@@ -15,7 +17,7 @@ const COTIZACIONES_DATA: Cotizaciones[] = [
   providedIn: 'root'
 })
 export class CotizacionesService {
-  private backendUrl:string = 'https://sigsoprol-backend-6c1c1113a8ca.herokuapp.com'
+  private backendUrl:string = environment.apiUrl;
   private cotizacionesUrl = '/api/cotizaciones/all';
   private apiEndpointUrl:string  = this.backendUrl + this.cotizacionesUrl;
 

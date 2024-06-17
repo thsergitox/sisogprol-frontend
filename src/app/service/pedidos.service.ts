@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Pedido} from "../model/pedido";
 import {HttpClient} from "@angular/common/http";
 import {Observable, of} from "rxjs";
+import { environment } from '../../environments/environment'
 
 const PEDIDOS_DATA: Pedido[] = [
   { id: 1, estado: 'Pendiente', descripcion: 'Pedido 1', name: 'Pedido Uno', id_empleado: 1, fechacreacion: new Date('2024-06-11T19:03:08.384082Z'), updated_at: new Date('2024-06-11T19:03:08.384082Z') },

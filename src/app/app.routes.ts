@@ -12,6 +12,6 @@ export const routes: Routes = [
   { path: 'generar-cotizacion', component: GenerarCotizacionComponent },
   // { path: 'ordenes-de-internamiento', component: OrdenesInternamientoComponent },
   // { path: 'notificaciones', component: NotificacionesComponent },
-  { path: '', redirectTo: '/panel-cotizaciones', pathMatch: 'full' },
-  { path: '**', redirectTo: '/panel-cotizaciones', pathMatch: 'full' }
+  //{ path: '', redirectTo: '/panel-cotizaciones', pathMatch: 'full' },
+  //{ path: '**', redirectTo: '/panel-cotizaciones', pathMatch: 'full' }
 ];
