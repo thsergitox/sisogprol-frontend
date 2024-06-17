@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Producto} from "../model/producto";
 import {HttpClient} from "@angular/common/http";
-import { getConexionBackend } from '../utils/constants'
 import { environment } from '../../environments/environment'
 
 

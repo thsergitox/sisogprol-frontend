@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Cotizaciones } from '../model/cotizaciones';
-import { getConexionBackend } from '../utils/constants'
 import { environment } from '../../environments/environment'
 
 // Datos de prueba
