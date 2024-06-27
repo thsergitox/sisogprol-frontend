@@ -1,12 +1,139 @@
 <div class="generar-cotizacion">
   <button style="background-color: transparent; border:transparent">
     <a href="/panel-cotizaciones">
-      <img src="assets/icons/arrow-back.svg" >
+      <img src="assets/icons/arrow-back.svg">
     </a>
   </button>
-  <app-product-selection></app-product-selection>
+  <section class="product-selection">
+    <h3>Seleccionar productos</h3>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+
+      <!-- Checkbox Column -->
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="isAllSelected()" [indeterminate]="isIndeterminate()"></mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? toggleSelection(element) : null" [checked]="selection.isSelected(element)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+
+      <!-- Nombre Column -->
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+        <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+      </ng-container>
+
+      <!-- Precio Column -->
+      <ng-container matColumnDef="precio">
+        <th mat-header-cell *matHeaderCellDef> Precio </th>
+        <td mat-cell *matCellDef="let element"> {{element.precio}} </td>
+      </ng-container>
+
+      <!-- Categoría Column -->
+      <ng-container matColumnDef="categoria">
+        <th mat-header-cell *matHeaderCellDef> Categoría </th>
+        <td mat-cell *matCellDef="let element"> {{element.categoria}} </td>
+      </ng-container>
+
+      <!-- Created_at Column -->
+      <ng-container matColumnDef="created_at">
+        <th mat-header-cell *matHeaderCellDef> Fecha de Creación </th>
+        <td mat-cell *matCellDef="let element"> {{element.created_at | date}} </td>
+      </ng-container>
+
+      <!-- Updated_at Column -->
+      <ng-container matColumnDef="updated_at">
+        <th mat-header-cell *matHeaderCellDef> Última Actualización </th>
+        <td mat-cell *matCellDef="let element"> {{element.updated_at | date}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </section>
   <hr>
-  <app-provider-info></app-provider-info>
+  <section class="provider-info">
+    <h3>Información del Proveedor</h3>
+    <form>
+      <div class="form-group">
+        <mat-form-field appearance="fill">
+          <mat-label>Seleccionar Proveedor</mat-label>
+          <mat-select [(ngModel)]="selectedProvider" (selectionChange)="onProviderSelectionChange($event.value)" name="selectedProvider">
+            <mat-option *ngFor="let provider of dataProveedores" [value]="provider">
+              {{ provider.nombre }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <input type="radio" id="newProvider" name="providerOption" [(ngModel)]="selectedProvider" />
+        <label for="newProvider">Nuevo Proveedor</label>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="providerName">Nombre Proveedor</label>
+          <input type="text" id="providerName" placeholder="Enter item" [(ngModel)]="providerName" name="providerName" />
+        </div>
+        <div class="form-group">
+          <label for="providerEmail">Correo Electrónico Proveedor</label>
+          <input type="email" id="providerEmail" placeholder="Enter description" [(ngModel)]="providerEmail" name="providerEmail" />
+        </div>
+        <div class="form-group">
+          <label for="providerRUC">RUC</label>
+          <input type="text" id="providerRUC" placeholder="Enter description" [(ngModel)]="providerRUC" name="providerRUC" />
+        </div>
+        <div class="form-group">
+          <label for="providerAddress">Dirección</label>
+          <input type="text" id="providerAddress" placeholder="Enter item" [(ngModel)]="providerAddress" name="providerAddress" />
+        </div>
+        <div class="form-group">
+          <label for="providerPhone">Teléfono</label>
+          <input onclick="" type="text" id="providerPhone" placeholder="Enter item" [(ngModel)]="providerPhone" name="providerPhone" />
+        </div>
+      </div>
+    </form>
+  </section>
   <hr>
-  <app-company-info></app-company-info>
+  <section>
+    <h3>Información Empresa</h3>
+    <form>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="nombreEmpresa">Nombre</label>
+          <input type="text" id="nombreEmpresa" value="Empresa XYZ" disabled />
+        </div>
+        <div class="form-group">
+          <label for="distritoEmpresa">Distrito</label>
+          <input type="text" id="distritoEmpresa" value="San Martín de Porres" disabled />
+        </div>
+        <div class="form-group">
+          <label for="telefonoEmpresa">Teléfono</label>
+          <input type="text" id="telefonoEmpresa" value="01-345323" disabled />
+        </div>
+        <div class="form-group">
+          <label for="correoEmpresa">Correo Electrónico</label>
+          <input type="email" id="correoEmpresa" value="empresaXYZ@empresaXYZ.pe" disabled />
+        </div>
+        <div class="form-group">
+          <label for="direccionEmpresa">Dirección</label>
+          <input type="text" id="direccionEmpresa" value="Av. Tupac Amaru - 210" disabled />
+        </div>
+        <div class="form-group">
+          <label for="fechaEmpresa">Fecha</label>
+          <input type="date" id="fechaEmpresa" (change)="setDate($event)"/>
+        </div>
+      </div>
+      <button (click)="createPedido()" type="submit">Enviar</button>
+    </form>
+  </section>
+
 </div>

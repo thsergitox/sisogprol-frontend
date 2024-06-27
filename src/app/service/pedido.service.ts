@@ -15,7 +15,7 @@ export class PedidoService {
   private pedidoUrl = '/api/pedidos';
   private apiEndpointUrl:string  = this.backendUrl + this.pedidoUrl;
 
-  createProducts(form: any): Observable<Pedido[]> {
-    return this.http.post<Pedido[]>(`${this.apiEndpointUrl}/create`, form);
+  createPedido(form: any): Observable<Pedido> {
+    return this.http.post<Pedido>(`${this.apiEndpointUrl}/create`, form);
   }
 }
