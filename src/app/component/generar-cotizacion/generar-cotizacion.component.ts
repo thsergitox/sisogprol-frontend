@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { ProviderInfoComponent } from "../provider-info/provider-info.component";
-import { CompanyInfoComponent } from "../company-info/company-info.component";
 import { PanelCotizacionesComponent } from '../panel-cotizaciones/panel-cotizaciones.component';
 import { MatTableModule } from '@angular/material/table';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -25,8 +23,6 @@ import Swal from 'sweetalert2';
   standalone: true,
   imports: [
     CommonModule,
-    ProviderInfoComponent,
-    CompanyInfoComponent,
     PanelCotizacionesComponent,
     MatTableModule,
     ReactiveFormsModule,
@@ -148,7 +144,7 @@ export class GenerarCotizacionComponent implements OnInit {
         cantidad: 200,
         total: 1000.00,
 
-        }).subscribe((data) => {
+      }).subscribe((data) => {
           this.ngOnInit()
           Swal.close();
           Swal.fire({
@@ -156,7 +152,16 @@ export class GenerarCotizacionComponent implements OnInit {
             title: 'registrarPersona!...',
             text: '!Se creó exitosamente el Pedido',
           });
-      })
+        },
+        (err: any) => {
+          Swal.close();
+          Swal.fire({
+            icon: 'error',
+            title: 'Advertencia!...',
+            text: '!Ah ocurrido un error al crear el Pedido!',
+          });
+        }
+      )
     });
 
   }
