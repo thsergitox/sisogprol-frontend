@@ -17,13 +17,18 @@ const COTIZACIONES_DATA: Cotizaciones[] = [
 })
 export class CotizacionesService {
   private backendUrl:string = environment.apiUrl;
-  private cotizacionesUrl = '/api/cotizaciones/all';
+  private cotizacionesUrl = '/api/cotizaciones';
   private apiEndpointUrl:string  = this.backendUrl + this.cotizacionesUrl;
 
   constructor(private http: HttpClient) { }
 
   getCotizaciones(): Observable<Cotizaciones[]> {
-    return this.http.get<Cotizaciones[]>(this.apiEndpointUrl);
+    return this.http.get<Cotizaciones[]>(`${this.apiEndpointUrl}/all`);
+    // return of(COTIZACIONES_DATA);
+  }
+
+  createCotizaciones(form: any): Observable<Cotizaciones[]> {
+    return this.http.post<Cotizaciones[]>(`${this.apiEndpointUrl}/create`, form);
     // return of(COTIZACIONES_DATA);
   }
 

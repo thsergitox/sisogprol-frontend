@@ -8,6 +8,7 @@ import {MatButton} from "@angular/material/button";
 import { ProductService } from '../../service/product.service';
 import {Producto} from "../../model/producto";
 import {DatePipe} from "@angular/common";
+import { DataSource } from '@angular/cdk/collections';
 
 
 
@@ -21,6 +22,7 @@ import {DatePipe} from "@angular/common";
 export class ProductSelectionComponent {
   displayedColumns: string[] = ['id', 'nombre', 'precio', 'categoria', 'created_at', 'updated_at'];
   dataSource: Producto[] = [];
+  clickedRows = new Set<Producto>();
 
   constructor(private _productService: ProductService) {
   }
