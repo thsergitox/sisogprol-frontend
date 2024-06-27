@@ -1,4 +1,3 @@
-import { ProductospedidosService } from './../../service/productospedidos.service';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { ProviderInfoComponent } from "../provider-info/provider-info.component";
@@ -15,11 +14,11 @@ import { Producto } from "../../model/producto";
 import { Proveedor } from '../../model/proveedor';
 import { ProveedorService } from '../../service/proveedor.service';
 import { SelectionModel } from '@angular/cdk/collections';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ProductService } from '../../service/product.service';
 import { PedidoService } from '../../service/pedido.service';
-import Swal from 'sweetalert2'
-
+import { ProductospedidosService } from './../../service/productospedidos.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-generar-cotizacion',
@@ -61,7 +60,8 @@ export class GenerarCotizacionComponent implements OnInit {
 
   selection = new SelectionModel<Producto>(true, []);
 
-  constructor(private _productService: ProductService,
+  constructor(
+    private _productService: ProductService,
     private _proveedorService: ProveedorService,
     private _productospedidosService: ProductospedidosService,
     private _pedidopedidosService: PedidoService
@@ -110,16 +110,14 @@ export class GenerarCotizacionComponent implements OnInit {
     console.log('Productos seleccionados:', this.selection.selected);
   }
 
-  setDate(event: Event): void{
+  setDate(event: Event): void {
     const input = event.target as HTMLInputElement;
     this.date = input.value;
-    console.log(this.date)
+    console.log(this.date);
   }
 
-  createPedido(): void{
-
+  createPedido(): void {
     this._pedidopedidosService.createPedido({
-
       estado: "Pendiente",
       descripcion: "Nuevo Pedido",
       name: "Pedido N",
@@ -128,14 +126,7 @@ export class GenerarCotizacionComponent implements OnInit {
       }
       //fechacreacion: this.date
     }).subscribe((data) => {
-      this.ngOnInit();
-      this.idPedido = data.id
-      Swal.close();
-      Swal.fire({
-        icon: 'success',
-        title: 'registrarPersona!...',
-        text: '!Se creó exitosamente el Pedido',
-      });
+      this.idPedido = data.id;
     },
     (err: any) => {
       Swal.close();
@@ -144,9 +135,33 @@ export class GenerarCotizacionComponent implements OnInit {
         title: 'Advertencia!...',
         text: '!Ah ocurrido un error al crear el Pedido!',
       });
-    })
+    });
 
-    //this._productospedidosService.
+    this.selection.selected.forEach((producto) => {
+      this._productospedidosService.createProductosPedidos({
+        pedido:{
+          id: this.idPedido
+        },
+        producto: {
+          id: producto.id
+        },
+        cantidad: 200,
+        total: 1000.00,
+
+        }).subscribe((data) => {
+          this.ngOnInit()
+          Swal.close();
+          Swal.fire({
+            icon: 'success',
+            title: 'registrarPersona!...',
+            text: '!Se creó exitosamente el Pedido',
+          });
+      })
+    });
+
   }
+
+
+
 
 }
